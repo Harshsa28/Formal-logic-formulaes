@@ -55,10 +55,6 @@ def make():
 				levels[i].append(disjunction(j,k))
 				levels[i].append(implies(j,k))
 	print_levels(levels)
-	print(len(levels[0]))
-	print(len(levels[1]))
-	print(len(levels[2]))
-	print(len(levels[3]))
 
 
 make()
