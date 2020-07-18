@@ -1,14 +1,6 @@
-class Tree:
-    def __init__(self, left, right=None):
-        if right == None:
-            self.left = left
-        else:
-            self.left = left
-            self.right = righ
-
-
 class variable:
 	def __init__(self):
+		#self.name = name
 		self.left = None
 		self.right = None
 
@@ -22,33 +14,52 @@ class conjunction:
 		self.left = left
 		self.right = right
 
-def disjunction:
+class disjunction:
 	def __init__(self, left, right):
 		self.left = left
 		self.right = right
 
-def implies:
+class implies:
 	def __init__(self, left, right):
 		self.left = left
 		self.right = right
 
+def print_tree(tree):
+	if isinstance(tree, variable):
+		return "p"
+	if isinstance(tree, negation):
+		return "(~"+print_tree(tree.left)+")"
+	if isinstance(tree, conjunction):
+		return "("+print_tree(tree.left)+" /\ "+print_tree(tree.right)+")"
+	if isinstance(tree, disjunction):
+		return "("+print_tree(tree.left)+" \/ "+print_tree(tree.right)+")"
+	if isinstance(tree, implies):
+		return "("+print_tree(tree.left)+" -> "+print_tree(tree.right)+")"
+
+def print_levels(levels):
+	for i in levels:
+		for j in i:
+			print(print_tree(j))
+		print('*'*500)
+
+def make():
+	levels = [[] for i in range(4)]
+	levels[0].append(variable())
+	for i in range(1, 4):
+		levels[i].append(variable())
+		for j in levels[i-1]:
+			levels[i].append(negation(j))
+		for j in levels[i-1]:
+			for k in levels[i-1]:
+				levels[i].append(conjunction(j,k))
+				levels[i].append(disjunction(j,k))
+				levels[i].append(implies(j,k))
+	print_levels(levels)
+	print(len(levels[0]))
+	print(len(levels[1]))
+	print(len(levels[2]))
+	print(len(levels[3]))
 
 
-def var(tree, num): #tree is an instance of Tree; num is till which variable I have reached. 9 means I have reached p9
-	return "p"+str(num+1)
-
-def not():
-	return "not"
-
-def and():
-	return "and"
-
-def or():
-	return "or"
-
-def implies():
-	return "implies"
-
-hades = []
-
+make()
 
